@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-api
+  labels:
+    run: user-api
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/user-api
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: user-api
+  type: ClusterIP
