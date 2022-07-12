@@ -6,6 +6,11 @@ metadata:
     app: user-api
 spec:
   replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+    type: RollingUpdate
   selector:
     matchLabels:
       app: user-api
@@ -16,10 +21,8 @@ spec:
     spec:
       containers:
       - name: user-api
-        image: henry2020/udagram-api-user:v1
+        image: henry2020/udagram-api-user:v1 
         imagePullPolicy: Always
-        ports:
-        - containerPort: 80
         resources:
           requests:
             cpu: "100m"
@@ -27,4 +30,54 @@ spec:
           limits:
             cpu: "500m"
             memory: "2Gi"
+        env:
+          - name: POSTGRES_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: env-secret
+                key: POSTGRES_USERNAME
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: env-secret
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: POSTGRES_HOST
+          - name: POSTGRES_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: POSTGRES_DATABASE
+          - name: AWS_S3_BUCKET
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: AWS_S3_BUCKET
+          - name: AWS_REGION
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: AWS_REGION
+          - name: AWS_PROFILE
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: AWS_PROFILE
+          - name: JWT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: JWT_SECRET
+          - name: URL
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: URL
+        volumeMounts:
+          - name: aws-secret
+            mountPath: "/root/.aws/"
+            readOnly: true 
       restartPolicy: Always

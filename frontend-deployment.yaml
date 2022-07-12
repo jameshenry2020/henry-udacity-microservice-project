@@ -19,7 +19,6 @@ spec:
         image: henry2020/udagram-frontend:v3
         imagePullPolicy: Always
         ports:
-        - name: http
           containerPort: 80
         resources:
           requests:

@@ -8,9 +8,9 @@ metadata:
   selfLink: /api/v1/namespaces/default/services/feed-api
 spec:
   ports:
-  - port: 80
+  - port: 8080
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
     run: feed-api
   type: ClusterIP
