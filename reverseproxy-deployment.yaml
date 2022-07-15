@@ -18,4 +18,6 @@ spec:
       - name: reverseproxy
         image: henry2020/reverseproxy:latest
         imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
       restartPolicy: Always

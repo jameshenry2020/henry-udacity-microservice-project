@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend-app
@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: henry2020/udagram-frontend:v3
+        image: henry2020/udagram-frontend:v4
         imagePullPolicy: Always
         ports:
-          containerPort: 80
+          - containerPort: 80
         resources:
           requests:
             cpu: "150m"
